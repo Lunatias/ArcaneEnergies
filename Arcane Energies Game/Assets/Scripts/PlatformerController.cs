@@ -14,6 +14,28 @@ public class PlatformerController : MonoBehaviour
     private Rigidbody2D rb;
 
     private bool onGround;
+
+    //assign variable for health
+    public float health, maxHealth;
+    public HealthBar healthBar;
+
+    //method to take damage
+    public void TakeDamage() {
+        if (health >0) {
+            health -= 1;
+            healthBar.UpdateHealthBar();
+        }
+
+    }
+
+    public void RecoverDamage() {
+        if (health < maxHealth) {
+            health += 1;
+            healthBar.UpdateHealthBar();
+        }
+        
+        
+    }
     
 
 
@@ -61,10 +83,18 @@ public class PlatformerController : MonoBehaviour
 
         }
 
+        if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            this.TakeDamage();
+        } else if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            this.RecoverDamage();
+        }
+
         if (playerAnimator != null)
         {
             playerAnimator.SetFloat("speed", rb.velocity.magnitude);
         }
+
+
     }
 
 
